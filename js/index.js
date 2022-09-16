@@ -1,100 +1,150 @@
-const addTextButton = document.getElementById("add_task_button");
-const newTaskElement = document.getElementById("task_text");
-const todoListElement = document.getElementById("todo_list");
-const doingListElement = document.getElementById("doing_list");
-const doneListElement = document.getElementById("done_list");
-const addPersonButton = document.getElementById("add_person_button");
-const newPerson = document.getElementById("person_text");
-const personListElement = document.getElementById("person_list");
-const selectPerson = document.getElementById("select_person");
+`use strict`;
 
-const taskList = [];
-const personList = [];
+{
+  const addTaskButton = document.getElementById("add_task_button");
+  const newTaskElement = document.getElementById("task_text");
+  const todoListElement = document.getElementById("todo_list");
+  const doingListElement = document.getElementById("doing_list");
+  const doneListElement = document.getElementById("done_list");
+  const addPersonButton = document.getElementById("add_person_button");
+  const newPersonElement = document.getElementById("person_text");
+  const personListElement = document.getElementById("person_list");
+  const selectPerson = document.getElementById("select_person");
 
-function appendTaskList() {
-  let todoHtml = "";
-  let doingHtml = "";
-  let doneHtml = ""
-  for (let i = 0; i < taskList.length; i++) {
-    if(taskList[i].status === 0){
-      todoHtml += 
-      '<li>' + taskList[i].name  
-        + '<button onClick="doingTask(' + i + ')">doing</button>'
-        + '<button onClick="doneTask(' + i + ')">done</button>'
-        + '<button onClick="deleteTask(' + i + ')">削除</button>'
-      '</li>';            
+  let taskList = [];
+  let personList = [];
+
+  const appendTask = (task) =>{   
+    const li = document.createElement('li');
+    const taskSpan = document.createElement('span');
+    const todoButton = document.createElement('button');
+    const doingButton = document.createElement('button');
+    const doneButton = document.createElement('button');
+    const deleteButton = document.createElement('button');
+    const personSpan = document.createElement('span');
+
+    taskSpan.textContent = task.name;
+    todoButton.textContent = 'todo';
+    doingButton.textContent = 'doing';
+    doneButton.textContent = 'done';
+    deleteButton.textContent = 'delete';
+    personSpan.textContent = '：' + personList.find(person => person.id === task.personId).name;
+
+    li.appendChild(taskSpan);
+
+    if(task.status === 0){      
+      todoListElement.appendChild(li);
+      li.appendChild(doingButton);
+      li.appendChild(doneButton);        
     }
-    if(taskList[i].status === 1){
-      doingHtml += 
-      '<li>' + taskList[i].name  
-        + '<button onClick="todoTask(' + i + ')">todo</button>'
-        + '<button onClick="doneTask(' + i + ')">done</button>'
-        + '<button onClick="deleteTask(' + i + ')">削除</button>'
-      '</li>';            
+
+    if(task.status === 1){
+      doingListElement.appendChild(li);
+      li.appendChild(todoButton);
+      li.appendChild(doneButton);
+    }
+
+    if(task.status === 2){
+      doneListElement.appendChild(li);
+      li.appendChild(todoButton);
+      li.appendChild(doingButton);
+    }
+
+    li.appendChild(deleteButton);
+    li.appendChild(personSpan); 
+
+    todoButton.addEventListener('click', () => {
+      task.status = 0;
+      li.remove();
+      appendTask(task);
+    });
+    
+    doingButton.addEventListener('click', () => {
+      task.status = 1;
+      li.remove();
+      appendTask(task);
+    });
+
+    doneButton.addEventListener('click', () => {
+      task.status = 2;
+      li.remove();
+      appendTask(task);
+    });
+   
+    deleteButton.addEventListener('click', () => {
+      taskList = taskList.filter(t => t.id !== task.id );
+      li.remove();
+    });
+  }
+
+  function personAlert() {
+    if(!personList.length){
+      if(!alert("担当者がいません。先に担当者を入力してください。")){
+        newPerson.focus();
+      };
+    } 
+  }
+
+  addTaskButton.addEventListener('click',() => {
+    if (newTaskElement.value === ""){
+      return;
     };
-    if(taskList[i].status === 2){
-      doneHtml += 
-      '<li>' + taskList[i].name  
-        + '<button onClick="todoTask(' + i + ')">todo</button>'
-        + '<button onClick="doingTask(' + i + ')">doing</button>'
-        + '<button onClick="deleteTask(' + i + ')">削除</button>'
-      '</li>';            
-    };
-     
-  }
-  
-  todoListElement.innerHTML = todoHtml; 
-  doingListElement.innerHTML = doingHtml; 
-  doneListElement.innerHTML = doneHtml; 
+    
+    //const targetPerson = personList.find(person => person.id === selectPerson.value);
+    const newTask = { id : new Date().getTime().toString(), name :       newTaskElement.value, status : 0, personId : selectPerson.value}; 
+    taskList.push(newTask); 
+    appendTask(newTask);
+    //appendTaskList();
+    newTaskElement.value = "";
+    newTaskElement.focus();
+  })
 
-};
+  const appendPerson = (person) =>{   
+    const li = document.createElement('li');
+    const deleteButton = document.createElement('button');
+    const span = document.createElement('span');
 
-function todoTask(i) {
-  taskList[i].status = 0;
-  appendTaskList();
-};
+    span.textContent = person.name;
+    deleteButton.textContent = 'delete';
 
-function doingTask(i) {
-  taskList[i].status = 1;
-  appendTaskList();
-};
+    li.appendChild(span);
+    li.appendChild(deleteButton);
 
-function doneTask(i) {
-  taskList[i].status = 2;
-  appendTaskList();
-};
+    personListElement.appendChild(li);
+   
+    deleteButton.addEventListener('click', () => {
+      if(taskList.find(t => t.personId === person.id)) {
+         alert('この担当者のタスクがまだ残っています');
+         return;
+      }
 
-function deleteTask(i) {
-  taskList.splice(i,1);
-  appendTaskList();
-};
-
-addTextButton.addEventListener('click',() => {
-  if (newTaskElement.value === ""){
-    return;
-  };
-  taskList.push({ name : newTaskElement.value, status : 0 }); 
-  appendTaskList();
-  newTaskElement.value = "";
-});
-
-addPersonButton.addEventListener('click', () =>{
-  if (newPerson.value === ""){
-    return;
-  }
-  personList.push({ name : newPerson.value, id : new Date().getTime().toString() });
-  let personHtml = "";
-  for(let i = 0; i < personList.length; i++){
-    personHtml += 
-      '<li>' + personList[i].name + '</li>'
+      personList = personList.filter(p => p.id !== person.id );
+      li.remove();
+      const option = document.getElementById(person.id);
+      option.remove();
+    });
   }
 
-  let selectPersonHtml = "";
-  for(let i = 0; i < personList.length; i++){
-    selectPersonHtml += 
-      '<option value = "' + personList[i].id + '" >' + personList[i].name + '</option>'
+  addPersonButton.addEventListener('click', () =>{
+    if (newPersonElement.value === ""){
+      return;
+    }
+    const newPerson = { name : newPersonElement.value, id : new Date().getTime().toString(), };
+    personList.push(newPerson);
+    appendPerson(newPerson);  
+    appendPersonSelect(newPerson);
+    
+    newPersonElement.value = ""
+    newPersonElement.focus();
+  })
+ 
+  const appendPersonSelect = (person) => { 
+    const option = document.createElement('option');
+    option.id = person.id
+    option.value =  person.id;
+    option.text = person.name;
+
+    selectPerson.appendChild(option);
   }
 
-  personListElement.innerHTML = personHtml;
-  selectPerson.innerHTML = selectPersonHtml;
-});
+}
