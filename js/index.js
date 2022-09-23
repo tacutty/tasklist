@@ -22,6 +22,12 @@
     const doneButton = document.createElement('button');
     const deleteButton = document.createElement('button');
     const personSpan = document.createElement('span');
+    li.classList.add("task-class");
+    taskSpan.classList.add("task-name-class");
+    todoButton.classList.add("todo-button");
+    doingButton.classList.add("doing-button");
+    doneButton.classList.add("done-button");
+    deleteButton.classList.add("delete-button");
 
     taskSpan.textContent = task.name;
     todoButton.textContent = 'todo';
@@ -80,13 +86,14 @@
   function personAlert() {
     if(!personList.length){
       if(!alert("担当者がいません。先に担当者を入力してください。")){
-        newPerson.focus();
+        newPersonElement.focus();
       };
     } 
   }
 
   addTaskButton.addEventListener('click',() => {
     if (newTaskElement.value === ""){
+      console.log(personAlert());
       return;
     };
     
@@ -103,6 +110,9 @@
     const li = document.createElement('li');
     const deleteButton = document.createElement('button');
     const span = document.createElement('span');
+    li.classList.add("person-class");
+    span.classList.add("person-name-class");
+    deleteButton.classList.add("delete-button");
 
     span.textContent = person.name;
     deleteButton.textContent = 'delete';

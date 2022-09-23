@@ -3,23 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
   <title>Todo</title>
 </head>
 <body>
-  <h1>Task list</h1>
-  <input id="task_text" onfocus="personAlert()" type="text" value="">
-  <select id="select_person"></select>
-  <button id="add_task_button">追加</button>
-  <h2>Todo list</h2>
-  <ul id="todo_list"></ul>
-  <h2>Doing list</h2>
-  <ul id="doing_list"></ul>
-  <h2>Done list</h2>
-  <ul id="done_list"></ul>
-  <h1>担当者</h1>
-  <input id="person_text" type="text" value="">
-  <button id="add_person_button">追加</button>
-  <ul id="person_list"></ul>
+  <header>
+    <h1>Tatsuki-TASK-LIST</h1>
+  </header>
+  <main>
+    <div class="main-container">
+      <div class="task-container">
+        <h1>タスク管理</h1>
+        <label>新規タスク：<input id="task_text" onfocus="personAlert()" type="text" placeholder="タスクを入力してください"></label>
+        <label>担当者：<select id="select_person"></select></label>
+        <button id="add_task_button">追加</button>
+        <h2>Todo list</h2>
+        <ul id="todo_list"></ul>
+        <h2>Doing list</h2>
+        <ul id="doing_list"></ul>
+        <h2>Done list</h2>
+        <ul id="done_list"></ul>
+      </div>
+      <div class="person-container">
+        <h1>担当者管理</h1>
+        <label>新規担当者：<input id="person_text" type="text" placeholder="担当者を入力してください" >
+        <button id="add_person_button">追加</button></label>
+        <h2>担当者リスト</h2>
+        <ul id="person_list"></ul>
+      </div>
+    </div>
+  </main>
+  <footer>
+
+  </footer>
   <script src="js/index.js"></script>
 </body>
 </html>

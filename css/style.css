@@ -1,0 +1,103 @@
+body {
+  font-family: 'Sacramento', cursive, "游ゴシック";
+  color: #091118b1;
+}
+
+header > h1 {
+  border-bottom: 1px solid #416249fe;
+}
+
+label {
+  font-weight: bold;
+}
+
+#task_text, #person_text {
+  width:200px; 
+  height:30px;
+  font-size:70%;
+}
+
+#select_person {
+  width:100px; 
+  height:30px;
+}  
+
+.main-container {
+  display: flex;
+}
+
+.task-container {
+  margin-left: 30px;
+  width: 60%;
+}
+
+.person-container {
+  width: 40%;
+}
+
+#add_task_button, #add_person_button {
+  color: white;
+  width:50px; 
+  height:30px;
+  font-family: 'Sacramento', cursive, "游ゴシック";
+  background-color: #0c72cbb1;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#person_list {
+  background-color: #bec3c7a0;
+  width:90%; 
+  height:250px;
+  border-radius: 6px;
+  list-style: none;
+  font-weight: 900;
+  padding-left: 20px;
+}
+
+#todo_list, #done_list, #doing_list {
+  background-color: #bec3c7a0;
+  width:90%; 
+  height:250px;
+  border-radius: 6px;
+  list-style: none;
+  font-weight: 900;
+  padding-left: 20px;
+}
+
+.task-class, .person-class {
+  padding-top: 10px;
+} 
+
+.person-name-class {
+  display: inline-block;
+  width: 50%;
+}
+
+.task-name-class {
+  display: inline-block;
+  width: 30%;
+}
+
+.doing-button, .todo-button, .done-button {
+  width: 100px;
+  color: aliceblue;
+  background-color: #232422b1;
+  border: none;
+  border-radius: 6px;
+  font-family: 'Sacramento', cursive, "游ゴシック";
+  height:30px;
+  cursor: pointer;
+}
+
+.delete-button {
+  width: 100px;
+  color: aliceblue;
+  background-color: #c50404b1;
+  border: none;
+  border-radius: 6px;
+  font-family: 'Sacramento', cursive, "游ゴシック";
+  height:30px;
+  cursor: pointer;
+}
