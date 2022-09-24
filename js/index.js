@@ -108,19 +108,27 @@
 
   const appendPerson = (person) =>{   
     const li = document.createElement('li');
+    const editButton = document.createElement('button');
     const deleteButton = document.createElement('button');
     const span = document.createElement('span');
     li.classList.add("person-class");
     span.classList.add("person-name-class");
+    editButton.classList.add("edit-button");
     deleteButton.classList.add("delete-button");
 
     span.textContent = person.name;
-    deleteButton.textContent = 'delete';
+    deleteButton.textContent = 'Delete';
+    editButton.textContent = 'Edit'
 
     li.appendChild(span);
+    li.appendChild(editButton);
     li.appendChild(deleteButton);
-
+  
     personListElement.appendChild(li);
+
+    // editButton.addEventListener('click', () => {
+      
+    // });
    
     deleteButton.addEventListener('click', () => {
       if(taskList.find(t => t.personId === person.id)) {
@@ -130,8 +138,8 @@
 
       personList = personList.filter(p => p.id !== person.id );
       li.remove();
-      const option = document.getElementById(person.id);
-      option.remove();
+      const personOption = document.getElementById(person.id);
+      personOption.remove();
     });
   }
 

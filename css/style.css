@@ -49,7 +49,7 @@ label {
 #person_list {
   background-color: #bec3c7a0;
   width:90%; 
-  height:250px;
+  height:30%;
   border-radius: 6px;
   list-style: none;
   font-weight: 900;
@@ -68,22 +68,37 @@ label {
 
 .task-class, .person-class {
   padding-top: 10px;
+  padding-bottom: 2%;
+
 } 
 
 .person-name-class {
   display: inline-block;
-  width: 50%;
+  width: 60%;  
+  vertical-align: center;
 }
 
 .task-name-class {
   display: inline-block;
   width: 30%;
+  vertical-align: center;
 }
 
 .doing-button, .todo-button, .done-button {
   width: 100px;
   color: aliceblue;
   background-color: #232422b1;
+  border: none;
+  border-radius: 6px;
+  font-family: 'Sacramento', cursive, "游ゴシック";
+  height:30px;
+  cursor: pointer;
+}
+
+.edit-button {
+  width: 100px;
+  color: aliceblue;
+  background-color: #26b71cb1;
   border: none;
   border-radius: 6px;
   font-family: 'Sacramento', cursive, "游ゴシック";
