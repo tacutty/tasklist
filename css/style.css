@@ -74,7 +74,7 @@ label {
 
 .person-name-class {
   display: inline-block;
-  width: 60%;  
+  width: 50%;  
   vertical-align: center;
 }
 
@@ -99,6 +99,28 @@ label {
   width: 100px;
   color: aliceblue;
   background-color: #26b71cb1;
+  border: none;
+  border-radius: 6px;
+  font-family: 'Sacramento', cursive, "游ゴシック";
+  height:30px;
+  cursor: pointer;
+}
+
+.save-button {
+  width: 100px;
+  color: aliceblue;
+  background-color:#0c72cbb1;
+  border: none;
+  border-radius: 6px;
+  font-family: 'Sacramento', cursive, "游ゴシック";
+  height:30px;
+  cursor: pointer;
+}
+
+.cancel-button {
+  width: 100px;
+  color: aliceblue;
+  background-color:#bec3c7e5;
   border: none;
   border-radius: 6px;
   font-family: 'Sacramento', cursive, "游ゴシック";

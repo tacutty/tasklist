@@ -22,6 +22,7 @@
     const doneButton = document.createElement('button');
     const deleteButton = document.createElement('button');
     const personSpan = document.createElement('span');
+    
     li.classList.add("task-class");
     taskSpan.classList.add("task-name-class");
     todoButton.classList.add("todo-button");
@@ -35,6 +36,8 @@
     doneButton.textContent = 'done';
     deleteButton.textContent = 'delete';
     personSpan.textContent = '：' + personList.find(person => person.id === task.personId).name;
+
+    personSpan.dataset.name = task.personId;
 
     li.appendChild(taskSpan);
 
@@ -97,38 +100,92 @@
       return;
     };
     
-    //const targetPerson = personList.find(person => person.id === selectPerson.value);
-    const newTask = { id : new Date().getTime().toString(), name :       newTaskElement.value, status : 0, personId : selectPerson.value}; 
+    const newTask = { id : new Date().getTime().toString(), name : newTaskElement.value, status : 0, personId : selectPerson.value}; 
     taskList.push(newTask); 
     appendTask(newTask);
-    //appendTaskList();
     newTaskElement.value = "";
     newTaskElement.focus();
   })
 
   const appendPerson = (person) =>{   
     const li = document.createElement('li');
-    const editButton = document.createElement('button');
     const deleteButton = document.createElement('button');
-    const span = document.createElement('span');
+    const personaNameSpan = document.createElement('span');
+    const input = document.createElement('input');
+    const editPersonButton = document.createElement('button');
+    const savePersonButton = document.createElement('button');
+    const cancelPersonButton = document.createElement('button');
+
     li.classList.add("person-class");
-    span.classList.add("person-name-class");
-    editButton.classList.add("edit-button");
+    personaNameSpan.classList.add("person-name-class");
+    editPersonButton.classList.add("edit-button");
     deleteButton.classList.add("delete-button");
+    savePersonButton.classList.add("save-button");   
+    cancelPersonButton.classList.add("cancel-button");   
 
-    span.textContent = person.name;
+    personaNameSpan.textContent = person.name;
     deleteButton.textContent = 'Delete';
-    editButton.textContent = 'Edit'
+    editPersonButton.textContent = 'Edit';
+    savePersonButton.textContent = 'Save';
+    cancelPersonButton.textContent = 'Cancel';
 
-    li.appendChild(span);
-    li.appendChild(editButton);
+    li.appendChild(personaNameSpan);
+    li.appendChild(editPersonButton);
     li.appendChild(deleteButton);
   
     personListElement.appendChild(li);
 
-    // editButton.addEventListener('click', () => {
-      
-    // });
+    editPersonButton.addEventListener('click', () => {
+      input.value = person.name;
+
+      li.replaceChild(input, personaNameSpan);
+      li.replaceChild(savePersonButton, editPersonButton);
+      li.replaceChild(cancelPersonButton, deleteButton);
+    });
+
+    cancelPersonButton.addEventListener('click', () => {
+      input.value = person.name;
+
+      li.replaceChild(personaNameSpan, input);
+      li.replaceChild(editPersonButton, savePersonButton);
+      li.replaceChild(deleteButton, cancelPersonButton);
+    });
+
+    savePersonButton.addEventListener('click', () => {
+      if (input.value === ""){
+        input.value = person.name;
+      }
+
+      person.name = input.value;
+      personaNameSpan.textContent = person.name;
+
+      li.replaceChild(personaNameSpan, input);
+      li.replaceChild(editPersonButton, savePersonButton);
+      li.replaceChild(deleteButton, cancelPersonButton);
+
+      const editPerson = { name : person.name, id : person.id, }; 
+
+      const personIndex = personList.indexOf(person);
+
+      personList.splice(personIndex, 1, editPerson);
+
+      const editPersonOption = document.createElement('option');
+
+      editPersonOption.id = editPerson.id
+      editPersonOption.value =  editPerson.id;
+      editPersonOption.text = editPerson.name;
+
+      const oldPersonOption = document.getElementById(person.id);
+    
+      selectPerson.replaceChild(editPersonOption, oldPersonOption);
+
+      const taskPersonSpan = document.querySelectorAll('[data-name="' + person.id + '"]');
+
+      for(let i=0 ; i < taskPersonSpan.length; i++) {
+        taskPersonSpan[i].textContent = "：" + editPerson.name;
+      }
+    });
+
    
     deleteButton.addEventListener('click', () => {
       if(taskList.find(t => t.personId === person.id)) {
