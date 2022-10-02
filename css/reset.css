@@ -1,0 +1,13 @@
+body {
+  font-family: cursive, "游ゴシック";
+  color: #091118b1;
+}
+
+button, input, select, textarea {
+  font-family: cursive, "游ゴシック";
+  font-size   : 80%;
+}
+
+ul {
+  list-style: none;
+}

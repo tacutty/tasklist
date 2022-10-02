@@ -88,18 +88,18 @@
 
   function personAlert() {
     if(!personList.length){
-      if(!alert("担当者がいません。先に担当者を入力してください。")){
-        newPersonElement.focus();
-      };
+      alert("担当者がいません。先に担当者を入力してください。")
+      newPersonElement.focus();      
     } 
   }
 
   addTaskButton.addEventListener('click',() => {
     if (newTaskElement.value === ""){
-      console.log(personAlert());
       return;
-    };
+    }
     
+    personAlert();
+   
     const newTask = { id : new Date().getTime().toString(), name : newTaskElement.value, status : 0, personId : selectPerson.value}; 
     taskList.push(newTask); 
     appendTask(newTask);
@@ -117,6 +117,7 @@
     const cancelPersonButton = document.createElement('button');
 
     li.classList.add("person-class");
+    input.classList.add("person-edit-input");
     personaNameSpan.classList.add("person-name-class");
     editPersonButton.classList.add("edit-button");
     deleteButton.classList.add("delete-button");
@@ -156,34 +157,19 @@
         input.value = person.name;
       }
 
-      person.name = input.value;
-      personaNameSpan.textContent = person.name;
+      personList.find(p => p.id = person.id).name = input.value;
+      personaNameSpan.textContent = input.value;
+
+      document.getElementById(person.id).textContent = input.value;
+
+      const taskPersonSpan = document.querySelectorAll('[data-name="' + person.id + '"]');
+      for(let i=0 ; i < taskPersonSpan.length; i++) {
+        taskPersonSpan[i].textContent = "：" + input.value;
+      }
 
       li.replaceChild(personaNameSpan, input);
       li.replaceChild(editPersonButton, savePersonButton);
       li.replaceChild(deleteButton, cancelPersonButton);
-
-      const editPerson = { name : person.name, id : person.id, }; 
-
-      const personIndex = personList.indexOf(person);
-
-      personList.splice(personIndex, 1, editPerson);
-
-      const editPersonOption = document.createElement('option');
-
-      editPersonOption.id = editPerson.id
-      editPersonOption.value =  editPerson.id;
-      editPersonOption.text = editPerson.name;
-
-      const oldPersonOption = document.getElementById(person.id);
-    
-      selectPerson.replaceChild(editPersonOption, oldPersonOption);
-
-      const taskPersonSpan = document.querySelectorAll('[data-name="' + person.id + '"]');
-
-      for(let i=0 ; i < taskPersonSpan.length; i++) {
-        taskPersonSpan[i].textContent = "：" + editPerson.name;
-      }
     });
 
    
@@ -221,5 +207,4 @@
 
     selectPerson.appendChild(option);
   }
-
 }
