@@ -1,5 +1,22 @@
-header > h1 {
+body {
+  font-family:  "游ゴシック";
+  color: #091118b1;
+}
+.header {
+  padding: 30px 30px 0 30px;
+}
+h1 {
+  font-size: 36px;
   border-bottom: 1px solid #416249fe;
+}
+
+h2 {
+  font-size: 24px;
+  padding: 8px 0;
+}
+
+h3 {
+  font-size: 16px;
 }
 
 label {
@@ -26,13 +43,14 @@ button {
 }  
 
 .main-container {
+  padding: 30px;
   display: grid;
   grid-template-columns:60% 40%;
   grid-auto-columns: auto;
 }
 
-.task-container {
-  margin-left: 30px;
+.task-container > ul, .person-container > ul {
+  margin: 12px 0;
 }
 
 #add_task_button, #add_person_button {
