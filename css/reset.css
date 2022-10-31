@@ -1,13 +1,23 @@
 body {
-  font-family: cursive, "游ゴシック";
-  color: #091118b1;
+  line-height: 1;
 }
 
-button, input, select, textarea {
-  font-family: cursive, "游ゴシック";
-  font-size   : 80%;
-}
-
-ul {
+ol, ul {
   list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+* {
+  box-sizing: border-box;
 }
