@@ -1,0 +1,126 @@
+body {
+  font-family:  "游ゴシック";
+  color: #091118b1;
+}
+.header {
+  padding: 30px 30px 0 30px;
+}
+h1 {
+  font-size: 36px;
+  border-bottom: 1px solid #416249fe;
+}
+
+h2 {
+  font-size: 24px;
+  padding: 8px 0;
+}
+
+h3 {
+  font-size: 16px;
+}
+
+label {
+  font-weight: bold;
+}
+
+button {
+  width: 100px;
+  border: none;
+  height:30px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+#task_text, #person_text {
+  width:200px; 
+  height:30px;
+  font-size:70%;
+}
+
+#select_person {
+  width:100px; 
+  height:30px;
+}  
+
+.main-container {
+  padding: 30px;
+  display: grid;
+  grid-template-columns:60% 40%;
+  grid-auto-columns: auto;
+}
+
+.task-container > ul, .person-container > ul {
+  margin: 12px 0;
+}
+
+#add_task_button, #add_person_button {
+  color: white;
+  width:50px; 
+  height:30px;
+  background-color: #0c72cbb1;
+}
+
+#person_list {
+  background-color: #bec3c7a0;
+  width:90%; 
+  height:30%;
+  border-radius: 6px;
+  font-weight: 900;
+  padding-left: 20px;
+}
+
+#todo_list, #done_list, #doing_list {
+  background-color: #bec3c7a0;
+  width:90%; 
+  height:250px;
+  border-radius: 6px;
+  font-weight: 900;
+  padding-left: 20px;
+}
+
+.task-class, .person-class {
+  padding-top: 10px;
+  padding-bottom: 2%;
+
+} 
+
+.person-name-class {
+  display: inline-block;
+  width: 50%;  
+}
+
+.person-edit-input {
+  display: inline-block;
+  width: 50%;  
+}
+
+.task-name-class {
+  display: inline-block;
+  width: 30%;
+  vertical-align: center;
+}
+
+.doing-button, .todo-button, .done-button {
+  color: aliceblue;
+  background-color: #232422b1;
+}
+
+.edit-button {
+  color: aliceblue;
+  background-color: #26b71cb1;
+}
+
+.save-button {
+  color: aliceblue;
+  background-color:#0c72cbb1;
+}
+
+.cancel-button {
+  color: aliceblue;
+  background-color:#bec3c7e5;
+}
+
+.delete-button {
+  color: aliceblue;
+  background-color: #c50404b1;
+}

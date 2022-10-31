@@ -22,6 +22,13 @@
     const doneButton = document.createElement('button');
     const deleteButton = document.createElement('button');
     const personSpan = document.createElement('span');
+    
+    li.classList.add("task-class");
+    taskSpan.classList.add("task-name-class");
+    todoButton.classList.add("todo-button");
+    doingButton.classList.add("doing-button");
+    doneButton.classList.add("done-button");
+    deleteButton.classList.add("delete-button");
 
     taskSpan.textContent = task.name;
     todoButton.textContent = 'todo';
@@ -29,6 +36,8 @@
     doneButton.textContent = 'done';
     deleteButton.textContent = 'delete';
     personSpan.textContent = '：' + personList.find(person => person.id === task.personId).name;
+
+    personSpan.dataset.name = task.personId;
 
     li.appendChild(taskSpan);
 
@@ -79,22 +88,21 @@
 
   function personAlert() {
     if(!personList.length){
-      if(!alert("担当者がいません。先に担当者を入力してください。")){
-        newPerson.focus();
-      };
+      alert("担当者がいません。先に担当者を入力してください。")
+      newPersonElement.focus();      
     } 
   }
 
   addTaskButton.addEventListener('click',() => {
     if (newTaskElement.value === ""){
       return;
-    };
+    }
     
-    //const targetPerson = personList.find(person => person.id === selectPerson.value);
-    const newTask = { id : new Date().getTime().toString(), name :       newTaskElement.value, status : 0, personId : selectPerson.value}; 
+    personAlert();
+   
+    const newTask = { id : new Date().getTime().toString(), name : newTaskElement.value, status : 0, personId : selectPerson.value}; 
     taskList.push(newTask); 
     appendTask(newTask);
-    //appendTaskList();
     newTaskElement.value = "";
     newTaskElement.focus();
   })
@@ -102,15 +110,68 @@
   const appendPerson = (person) =>{   
     const li = document.createElement('li');
     const deleteButton = document.createElement('button');
-    const span = document.createElement('span');
+    const personaNameSpan = document.createElement('span');
+    const input = document.createElement('input');
+    const editPersonButton = document.createElement('button');
+    const savePersonButton = document.createElement('button');
+    const cancelPersonButton = document.createElement('button');
 
-    span.textContent = person.name;
-    deleteButton.textContent = 'delete';
+    li.classList.add("person-class");
+    input.classList.add("person-edit-input");
+    personaNameSpan.classList.add("person-name-class");
+    editPersonButton.classList.add("edit-button");
+    deleteButton.classList.add("delete-button");
+    savePersonButton.classList.add("save-button");   
+    cancelPersonButton.classList.add("cancel-button");   
 
-    li.appendChild(span);
+    personaNameSpan.textContent = person.name;
+    deleteButton.textContent = 'Delete';
+    editPersonButton.textContent = 'Edit';
+    savePersonButton.textContent = 'Save';
+    cancelPersonButton.textContent = 'Cancel';
+
+    li.appendChild(personaNameSpan);
+    li.appendChild(editPersonButton);
     li.appendChild(deleteButton);
-
+  
     personListElement.appendChild(li);
+
+    editPersonButton.addEventListener('click', () => {
+      input.value = person.name;
+
+      li.replaceChild(input, personaNameSpan);
+      li.replaceChild(savePersonButton, editPersonButton);
+      li.replaceChild(cancelPersonButton, deleteButton);
+    });
+
+    cancelPersonButton.addEventListener('click', () => {
+      input.value = person.name;
+
+      li.replaceChild(personaNameSpan, input);
+      li.replaceChild(editPersonButton, savePersonButton);
+      li.replaceChild(deleteButton, cancelPersonButton);
+    });
+
+    savePersonButton.addEventListener('click', () => {
+      if (input.value === ""){
+        input.value = person.name;
+      }
+
+      personList.find(p => p.id = person.id).name = input.value;
+      personaNameSpan.textContent = input.value;
+
+      document.getElementById(person.id).textContent = input.value;
+
+      const taskPersonSpan = document.querySelectorAll('[data-name="' + person.id + '"]');
+      for(let i=0 ; i < taskPersonSpan.length; i++) {
+        taskPersonSpan[i].textContent = "：" + input.value;
+      }
+
+      li.replaceChild(personaNameSpan, input);
+      li.replaceChild(editPersonButton, savePersonButton);
+      li.replaceChild(deleteButton, cancelPersonButton);
+    });
+
    
     deleteButton.addEventListener('click', () => {
       if(taskList.find(t => t.personId === person.id)) {
@@ -120,8 +181,8 @@
 
       personList = personList.filter(p => p.id !== person.id );
       li.remove();
-      const option = document.getElementById(person.id);
-      option.remove();
+      const personOption = document.getElementById(person.id);
+      personOption.remove();
     });
   }
 
@@ -146,5 +207,4 @@
 
     selectPerson.appendChild(option);
   }
-
 }
