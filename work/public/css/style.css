@@ -1,5 +1,5 @@
 body {
-  font-family:  "游ゴシック";
+  font-family: Verdana, Meiryo, 游ゴシック, "Yu Gothic", メイリオ, Meiryo, Helvetica, Arial, sans-serif;
   color: #091118b1;
 }
 .header {
@@ -13,10 +13,12 @@ h1 {
 h2 {
   font-size: 24px;
   padding: 8px 0;
+  margin-bottom: 10px;
 }
 
 h3 {
   font-size: 16px;
+  margin-top: 30px;
 }
 
 label {
@@ -29,6 +31,10 @@ button {
   height:30px;
   cursor: pointer;
   border-radius: 6px;
+}
+
+li {
+  display: flex;
 }
 
 #task_text, #person_text {
