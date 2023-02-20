@@ -1,3 +1,5 @@
 build:
   docker:
     web: php/Dockerfile
+run:
+  web: php -S 0.0.0.0 -t /work/public
