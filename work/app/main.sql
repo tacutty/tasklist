@@ -22,11 +22,11 @@ CREATE TABLE tasks (
   updated_at timestamp default current_timestamp on update current_timestamp
 );
 
-INSERT INTO persons (person_name) VALUES ('Shibata');
-INSERT INTO persons (person_name) VALUES ('Makino');
+-- INSERT INTO persons (person_name) VALUES ('Shibata');
+-- INSERT INTO persons (person_name) VALUES ('Makino');
 
-INSERT INTO tasks (task, now_status, person_id) VALUES ('Cleaning','todo', 1);
-INSERT INTO tasks (task, now_status, person_id) VALUES ('Shopping', 'doing', 2);
+-- INSERT INTO tasks (task, now_status, person_id) VALUES ('Cleaning','todo', 1);
+-- INSERT INTO tasks (task, now_status, person_id) VALUES ('Shopping', 'doing', 2);
 
 SELECT 
   tasks.id, now_status, task, tasks.created_at, person_name

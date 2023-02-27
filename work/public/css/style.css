@@ -69,7 +69,7 @@ li {
 #person_list {
   background-color: #bec3c7a0;
   width:90%; 
-  height:30%;
+  min-height: 250px;
   border-radius: 6px;
   font-weight: 900;
   padding-left: 20px;
@@ -78,7 +78,7 @@ li {
 #todo_list, #done_list, #doing_list {
   background-color: #bec3c7a0;
   width:90%; 
-  height:250px;
+  min-height: 250px;
   border-radius: 6px;
   font-weight: 900;
   padding-left: 20px;

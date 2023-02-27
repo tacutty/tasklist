@@ -15,7 +15,8 @@
   // let taskList = [];
   // let personList = [];
 
-  const appendTask = (task) =>{ 
+  const appendTask = (task) => { 
+    console.log(task);
     const li = document.createElement('li');
     const taskSpan = document.createElement('span');
     const deleteButton = document.createElement('button');
@@ -107,8 +108,7 @@
       .then(response => {
         if(!response.ok) {
           throw new Error('このタスクはすでに削除されています。');
-        }
-        
+        }       
       })
       .catch(err => {
         alert(err.message);
@@ -191,7 +191,8 @@
   function addTask(jsonId) {
     let idx = selectPerson.selectedIndex;
     let txt  = selectPerson.options[idx].text;
-    const newTask ={id: jsonId, now_status: 'todo', task: newTaskElement.value, created_at: new Date().getTime().toString(), person_name: txt};
+    let person_id  = Number(selectPerson.options[idx].id);
+    const newTask ={id: jsonId, now_status: 'todo', task: newTaskElement.value, created_at: new Date().getTime().toString(), person_name: txt, person_id: person_id};
     tasks.push(newTask);
     appendTask(newTask);
        
@@ -221,14 +222,12 @@
       addTask(json.id);
     });
 
-    // personAlert();
-
   })
 
   const appendPerson = (person) =>{   
     const li = document.createElement('li');
     const deleteButton = document.createElement('button');
-    const personaNameSpan = document.createElement('span');
+    const personNameSpan = document.createElement('span');
     const input = document.createElement('input');
     const editPersonButton = document.createElement('button');
     const savePersonButton = document.createElement('button');
@@ -236,13 +235,13 @@
 
     li.classList.add("person-class");
     input.classList.add("person-edit-input");
-    personaNameSpan.classList.add("person-name-class");
+    personNameSpan.classList.add("person-name-class");
     editPersonButton.classList.add("edit-button");
     deleteButton.classList.add("delete-button");
     savePersonButton.classList.add("save-button");   
     cancelPersonButton.classList.add("cancel-button");   
 
-    personaNameSpan.textContent = person.person_name;
+    personNameSpan.textContent = person.person_name;
     deleteButton.textContent = 'Delete';
     editPersonButton.textContent = 'Edit';
     savePersonButton.textContent = 'Save';
@@ -250,7 +249,7 @@
 
     li.dataset.id = person.id;
 
-    li.appendChild(personaNameSpan);
+    li.appendChild(personNameSpan);
     li.appendChild(editPersonButton);
     li.appendChild(deleteButton);
   
@@ -259,7 +258,7 @@
     editPersonButton.addEventListener('click', () => {
       input.value = person.person_name;
 
-      li.replaceChild(input, personaNameSpan);
+      li.replaceChild(input, personNameSpan);
       li.replaceChild(savePersonButton, editPersonButton);
       li.replaceChild(cancelPersonButton, deleteButton);
     });
@@ -267,7 +266,7 @@
     cancelPersonButton.addEventListener('click', () => {
       input.value = person.person_name;
 
-      li.replaceChild(personaNameSpan, input);
+      li.replaceChild(personNameSpan, input);
       li.replaceChild(editPersonButton, savePersonButton);
       li.replaceChild(deleteButton, cancelPersonButton);
     });
@@ -275,7 +274,7 @@
     savePersonButton.addEventListener('click', () => {
       if (input.value === ""){
         input.value = person.person_name;
-        li.replaceChild(personaNameSpan, input);
+        li.replaceChild(personNameSpan, input);
         li.replaceChild(editPersonButton, savePersonButton);
         li.replaceChild(deleteButton, cancelPersonButton);
       }
@@ -290,8 +289,14 @@
       }).then(response =>  {
         return response.json();
       }).then(json => {
-        person.person_name = json.person_name;
-        personaNameSpan.textContent = json.person_name;
+        person.person_name = json.person_name;      
+        personNameSpan.textContent = json.person_name;
+
+        for (let i = 0; i < tasks.length; i++) {
+          if (tasks[i].person_id === person.id ) {
+            tasks[i].person_name = json.person_name;
+          }        
+        }
 
         document.getElementById(person.id).textContent = json.person_name;
 
@@ -300,7 +305,7 @@
           taskPersonSpan[i].textContent = "：" + json.person_name;
         }
 
-        li.replaceChild(personaNameSpan, input);
+        li.replaceChild(personNameSpan, input);
         li.replaceChild(editPersonButton, savePersonButton);
         li.replaceChild(deleteButton, cancelPersonButton);
       });   
@@ -308,23 +313,23 @@
 
     deleteButton.addEventListener('click', () => {
       if(tasks.find(t => t.person_name === person.person_name)) {       
-         alert('この担当者のタスクがまだ残っています');
-         return;
-      }
-
-      fetch('?action=deletePerson',  {
-        method: 'POST',
-        body: new URLSearchParams({
-          id: deleteButton.parentNode.dataset.id,
-          token: token,
-        }),
-      }).then(() =>  {
-        persons = persons.filter(p => p.id !== person.id );
-        li.remove();
-
-        const personOption = document.getElementById(person.id);
-        personOption.remove();
-      });     
+        alert('この担当者のタスクがまだ残っています');
+        return;
+      } else {
+        fetch('?action=deletePerson',  {
+          method: 'POST',
+          body: new URLSearchParams({
+            id: deleteButton.parentNode.dataset.id,
+            token: token,
+          }),
+        }).then(() =>  {
+          persons = persons.filter(p => p.id !== person.id );
+          li.remove();
+  
+          const personOption = document.getElementById(person.id);
+          personOption.remove();
+        });     
+      }      
     });
   }
 
@@ -359,7 +364,6 @@
     .then(json => {
       addPerson(json.id);
     });
-
   })
  
   const appendPersonSelect = (person) => { 

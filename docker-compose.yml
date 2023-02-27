@@ -12,10 +12,16 @@ services:
       MYSQL_PASSWORD: myapppass
     volumes:
     - db-data:/var/lib/mysql
-  php:
-    build: ./php
+  web:
+    build: 
+      dockerfile: Dockerfile.web
     depends_on:
     - db
+    environment:
+      DSN: 'mysql:host=db;dbname=myapp;charset=utf8mb4'
+      DB_USER: myappuser
+      DB_PASS: myapppass
+      PORT: 8000
     ports:
     - 8563:8000
     volumes:
