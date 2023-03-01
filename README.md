@@ -7,6 +7,7 @@ https://devcenter.heroku.com/ja/articles/container-registry-and-runtime
 4. heroku container:release web
 ```
 # Githubにpush
-# MySQLへの接続
+# MySQLへの接続方法
 1. デスクトップのメモ帳
+
 

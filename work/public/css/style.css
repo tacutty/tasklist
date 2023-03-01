@@ -109,16 +109,20 @@ li {
 .doing-button, .todo-button, .done-button {
   color: aliceblue;
   background-color: #232422b1;
+  margin-right: 5px;
 }
 
 .edit-button {
   color: aliceblue;
   background-color: #26b71cb1;
+  margin-right: 5px;
 }
 
 .save-button {
   color: aliceblue;
   background-color:#0c72cbb1;
+  margin-left: 2px;
+  margin-right: 5px;
 }
 
 .cancel-button {

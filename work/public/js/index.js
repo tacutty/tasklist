@@ -16,7 +16,6 @@
   // let personList = [];
 
   const appendTask = (task) => { 
-    console.log(task);
     const li = document.createElement('li');
     const taskSpan = document.createElement('span');
     const deleteButton = document.createElement('button');
@@ -167,7 +166,8 @@
       if (!confirm('タスクを削除しますか？')) {
         return;
       }
-
+      
+      deleteButton.disabled = true;
       fetch('?action=deleteTask',  {
         method: 'POST',
         body: new URLSearchParams({
@@ -179,6 +179,7 @@
         li.remove();
       }); 
     });
+
   }
 
   function personAlert() {
@@ -198,6 +199,7 @@
        
     newTaskElement.value = "";
     newTaskElement.focus();
+    
   }
 
   addTaskForm.addEventListener('submit', e => {
@@ -206,6 +208,7 @@
     if (newTaskElement.value === ""){
       return;
     }
+    addTaskButton.disabled = true;
     
     fetch('?action=addTask',  {
       method: 'POST',
@@ -220,9 +223,9 @@
     })
     .then(json => {
       addTask(json.id);
-    });
-
-  })
+      addTaskButton.disabled = false;
+    });    
+  });
 
   const appendPerson = (person) =>{   
     const li = document.createElement('li');
@@ -316,6 +319,7 @@
         alert('この担当者のタスクがまだ残っています');
         return;
       } else {
+        deleteButton.disabled = true;
         fetch('?action=deletePerson',  {
           method: 'POST',
           body: new URLSearchParams({
@@ -324,10 +328,9 @@
           }),
         }).then(() =>  {
           persons = persons.filter(p => p.id !== person.id );
-          li.remove();
-  
+          li.remove();  
           const personOption = document.getElementById(person.id);
-          personOption.remove();
+          personOption.remove();          
         });     
       }      
     });
@@ -346,10 +349,12 @@
 
   addPersonForm.addEventListener('submit', e =>{
     e.preventDefault();
-
+    
     if (newPersonElement.value === ""){
       return;
     }
+
+    addPersonButton.disabled = true;
     
     fetch('?action=addPerson',  {
       method: 'POST',
@@ -362,7 +367,8 @@
       return response.json();
     })
     .then(json => {
-      addPerson(json.id);
+      addPerson(json.id);      
+      addPersonButton.disabled = false;          
     });
   })
  
