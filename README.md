@@ -6,8 +6,5 @@ https://devcenter.heroku.com/ja/articles/container-registry-and-runtime
 3. heroku container:push --recursive
 4. heroku container:release web
 ```
-# Githubにpush
-# MySQLへの接続方法
-1. デスクトップのメモ帳
 
 
